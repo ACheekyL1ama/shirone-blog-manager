@@ -1,0 +1,35 @@
+name: Build Windows release
+on:
+  workflow_dispatch:
+  push:
+    tags: ['v*']
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - name: Fetch theme test fixture
+        shell: pwsh
+        run: |
+          git clone https://github.com/LyraVoid/Shirone.git "$env:RUNNER_TEMP/shirone"
+          git -C "$env:RUNNER_TEMP/shirone" checkout dd1b782
+          "SHIRONE_THEME_DIR=$env:RUNNER_TEMP/shirone" >> $env:GITHUB_ENV
+      - run: npm test
+      - run: npm run dist -- --publish never
+      - name: Publish portable EXE
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $version = (Get-Content package.json | ConvertFrom-Json).version
+          $tag = "v$version"
+          gh release view $tag *> $null
+          if ($LASTEXITCODE -ne 0) { gh release create $tag --target $env:GITHUB_SHA --title $tag --notes-file RELEASE_NOTES.md }
+          gh release upload $tag "release/Shirone-Blog-Manager-$version.exe" LICENSE --clobber
