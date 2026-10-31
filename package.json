@@ -1,0 +1,54 @@
+{
+  "name": "shirone-manager",
+  "version": "1.0.4",
+  "description": "Shirone 本地博客可视化管理工具",
+  "author": "ACheekyL1ama",
+  "private": true,
+  "main": "main.cjs",
+  "scripts": {
+    "start": "node build-ui.cjs && electron .",
+    "test": "node --test test/*.test.cjs",
+    "dist": "node build-ui.cjs && electron-builder --win portable --x64"
+  },
+  "dependencies": {
+    "@toast-ui/editor": "3.2.2",
+    "dompurify": "^3.4.17",
+    "typescript": "6.0.3",
+    "yaml": "^2.9.1"
+  },
+  "devDependencies": {
+    "electron": "45.2.1",
+    "electron-builder": "26.18.0",
+    "esbuild": "^0.28.2"
+  },
+  "build": {
+    "appId": "local.shirone.manager",
+    "productName": "Shirone 博客管家",
+    "artifactName": "Shirone-Blog-Manager-${version}.${ext}",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "main.cjs",
+      "preload.cjs",
+      "lib/**",
+      "ui/**",
+      "package.json"
+    ],
+    "win": {
+      "target": "portable",
+      "icon": "ui/assets/app.ico",
+      "signAndEditExecutable": true,
+      "signExecutable": false
+    },
+    "portable": {
+      "requestExecutionLevel": "user"
+    }
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ACheekyL1ama/shirone-blog-manager.git"
+  },
+  "homepage": "https://github.com/ACheekyL1ama/shirone-blog-manager"
+}

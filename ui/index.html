@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: blog-asset: https: http:; media-src 'self' blog-asset: https: http:; connect-src 'self' blog-asset:; font-src 'self' data:; object-src 'none'; frame-src 'none'">
+<title>Shirone 博客管家</title>
+<link rel="stylesheet" href="../node_modules/@toast-ui/editor/dist/toastui-editor.css"><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="theme.css">
+</head><body>
+<aside class="rail">
+  <div class="brand"><span class="brand-icon">S</span><div>Shirone<small>博客管家</small></div></div>
+  <div class="rail-caption">你的创作空间</div>
+  <nav>
+    <button data-page="dashboard" class="active"><svg class="icon" aria-hidden="true"><use href="icons.svg#home"/></svg>工作台</button>
+    <button data-page="posts"><svg class="icon" aria-hidden="true"><use href="icons.svg#pen"/></svg>文章管理</button>
+    <button data-page="appearance"><svg class="icon" aria-hidden="true"><use href="icons.svg#palette"/></svg>外观与资料</button>
+    <button data-page="music"><svg class="icon" aria-hidden="true"><use href="icons.svg#music"/></svg>音乐歌单</button>
+    <button data-page="comments"><svg class="icon" aria-hidden="true"><use href="icons.svg#comment"/></svg>评论设置</button>
+    <button data-page="backups"><svg class="icon" aria-hidden="true"><use href="icons.svg#backup"/></svg>备份与恢复</button>
+  </nav>
+  <div class="rail-bottom"><div class="project-status"><i></i><span id="project-label">尚未连接博客</span></div><button id="choose-project" class="quiet">切换博客文件夹</button><p>本地管理 · 内容保存在你的电脑</p></div>
+</aside>
+<div class="workspace">
+  <header><div class="breadcrumb">我的博客 <span>/</span> <strong id="page-title">工作台</strong></div><div class="top-actions"><span id="dirty-label"></span><button id="preview-button" class="secondary"><svg class="icon" aria-hidden="true"><use href="icons.svg#eye"/></svg>本地预览</button><button id="build-button" class="primary"><svg class="icon" aria-hidden="true"><use href="icons.svg#build"/></svg>构建博客</button></div></header>
+  <main id="main"></main>
+  <footer><span id="status-text">正在连接博客…</span><button id="toggle-logs">运行日志 ⌃</button></footer>
+  <section id="log-panel" hidden><div><strong>运行日志</strong><button id="stop-preview">停止预览</button><button id="open-output">打开构建文件夹</button></div><pre id="logs"></pre></section>
+</div>
+<div id="toast" role="status" hidden></div>
+<dialog id="confirm-dialog"><h3 id="confirm-title"></h3><p id="confirm-message"></p><div class="dialog-actions"><button id="confirm-cancel" class="secondary">取消</button><button id="confirm-ok" class="primary">确定</button></div></dialog>
+<script src="vendor/editor.js"></script>
+<script src="app.js"></script></body></html>
